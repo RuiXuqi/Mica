@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Window.class)
 public final class MixinWindow {
 
-    @Shadow @Final private long window;
+    @Shadow @Final private long handle;
     @Shadow private boolean fullscreen;
 
     @Inject(method = "<init>", at = @At(value = "TAIL"))
@@ -34,7 +34,7 @@ public final class MixinWindow {
 
         // Initialize Mica
         NtDll.getBuildNumber();
-        DwmApi.updateDwm(this.fullscreen, this.window);
+        DwmApi.updateDwm(this.fullscreen, this.handle);
     }
 
     @Inject(method = "updateFullscreen", at = @At(value = "TAIL"))
@@ -45,6 +45,6 @@ public final class MixinWindow {
         }
 
         // Update DWM
-        DwmApi.updateDwm(this.fullscreen, this.window);
+        DwmApi.updateDwm(this.fullscreen, this.handle);
     }
 }

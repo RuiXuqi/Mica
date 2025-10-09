@@ -106,6 +106,6 @@ public final class ModConfig extends Settings<ModConfig> {
 
     public static void update() {
         final Window window = Minecraft.getInstance().getWindow();
-        DwmApi.updateDwm(window.isFullscreen(), window.getWindow());
+        DwmApi.updateDwm(window.isFullscreen(), window.handle());
     }
 }

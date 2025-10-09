@@ -25,11 +25,11 @@
   },
   "mixins": [ "mica-common.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.16.7",
-    "minecraft": ">=1.21.2"
+    "fabricloader": ">=0.17.2",
+    "minecraft": ">=1.21.9"
   },
   "recommends": {
-    "yet_another_config_lib_v3": ">=3.6.0+1.21.2"
+    "yet_another_config_lib_v3": ">=3.8.0+1.21.9"
   },
 
   "custom": {

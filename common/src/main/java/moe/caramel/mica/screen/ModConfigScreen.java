@@ -4,6 +4,7 @@ import static net.minecraft.network.chat.Component.translatable;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionDescription;
+import dev.isxander.yacl3.api.StateManager;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
@@ -43,15 +44,14 @@ public final class ModConfigScreen {
                 .name(translatable("mica.category.general.use_immersive_dark_mode"))
                 .description(OptionDescription.of(translatable("mica.category.general.use_immersive_dark_mode.description")))
                 .controller(BooleanControllerBuilder::create)
-                .binding(
+                .stateManager(StateManager.createInstant(
                     false,
                     () -> ModConfig.get().useImmersiveDarkMode.get(),
                     value -> {
                         final ModConfig config = ModConfig.get();
                         config.setConfig(config.useImmersiveDarkMode, value);
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
 
@@ -64,18 +64,17 @@ public final class ModConfigScreen {
                     translatable("mica.category.general.system_backdrop_type.description2").withStyle(ChatFormatting.GRAY)
                 ))
                 .available(Mica.buildNumber >= Mica.BACKDROP_BUILD_NUM) // >= 22621
-                .controller(option -> EnumControllerBuilder.create(option).enumClass(DwmApi.DWM_SYSTEMBACKDROP_TYPE.class).valueFormatter(type -> {
+                .controller(option -> EnumControllerBuilder.create(option).enumClass(DwmApi.DWM_SYSTEMBACKDROP_TYPE.class).formatValue(type -> {
                     return translatable("mica.category.general.system_backdrop_type.type." + type.translate);
                 }))
-                .binding(
+                .stateManager(StateManager.createInstant(
                     DwmApi.DWM_SYSTEMBACKDROP_TYPE.DWMSBT_AUTO,
                     () -> ModConfig.get().systemBackdropType.get(),
                     value -> {
                         final ModConfig config = ModConfig.get();
                         config.setConfig(config.systemBackdropType, value);
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
 
@@ -83,18 +82,17 @@ public final class ModConfigScreen {
             .option(Option.<DwmApi.DWM_WINDOW_CORNER_PREFERENCE>createBuilder()
                 .name(translatable("mica.category.general.corner_preference"))
                 .description(OptionDescription.of(translatable("mica.category.general.corner_preference.description")))
-                .controller(option -> EnumControllerBuilder.create(option).enumClass(DwmApi.DWM_WINDOW_CORNER_PREFERENCE.class).valueFormatter(type -> {
+                .controller(option -> EnumControllerBuilder.create(option).enumClass(DwmApi.DWM_WINDOW_CORNER_PREFERENCE.class).formatValue(type -> {
                     return translatable("mica.category.general.corner_preference.type." + type.translate);
                 }))
-                .binding(
+                .stateManager(StateManager.createInstant(
                     DwmApi.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DEFAULT,
                     () -> ModConfig.get().windowCorner.get(),
                     value -> {
                         final ModConfig config = ModConfig.get();
                         config.setConfig(config.windowCorner, value);
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
             .build();
@@ -107,22 +105,21 @@ public final class ModConfigScreen {
             .description(OptionDescription.of(translatable("mica.category.border.border_color.description")))
             .available(!ModConfig.get().useDefaultBorder.get() && !ModConfig.get().hideWindowBorder.get())
             .controller(ColorControllerBuilder::create)
-            .binding(
+            .stateManager(StateManager.createInstant(
                 new Color(DwmApi.DWMWA_COLOR_DEFAULT),
                 () -> new Color(ModConfig.get().borderColor.get()),
                 value -> {
                     final ModConfig config = ModConfig.get();
                     config.setConfig(config.borderColor, value.getRGB());
                 }
-            )
-            .instant(true)
+            ))
             .build();
         final Option<Boolean> hideWindowBorder = Option.<Boolean>createBuilder()
             .name(translatable("mica.category.border.hide_border"))
             .description(OptionDescription.of(translatable("mica.category.border.hide_border.description")))
             .available(!ModConfig.get().useDefaultBorder.get())
             .controller(BooleanControllerBuilder::create)
-            .binding(
+            .stateManager(StateManager.createInstant(
                 false,
                 () -> ModConfig.get().hideWindowBorder.get(),
                 value -> {
@@ -130,8 +127,7 @@ public final class ModConfigScreen {
                     config.setConfig(config.hideWindowBorder, value);
                     borderColor.setAvailable(!value);
                 }
-            )
-            .instant(true)
+            ))
             .build();
 
         return ConfigCategory.createBuilder()
@@ -140,7 +136,7 @@ public final class ModConfigScreen {
                 .name(translatable("mica.category.border.use_default_border"))
                 .description(OptionDescription.of(translatable("mica.category.border.use_default_border.description")))
                 .controller(BooleanControllerBuilder::create)
-                .binding(
+                .stateManager(StateManager.createInstant(
                     true,
                     () -> ModConfig.get().useDefaultBorder.get(),
                     value -> {
@@ -155,8 +151,7 @@ public final class ModConfigScreen {
                             borderColor.setAvailable(!enabled);
                         }
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
             .option(hideWindowBorder)
@@ -171,15 +166,14 @@ public final class ModConfigScreen {
             .description(OptionDescription.of(translatable("mica.category.caption.caption_color.description")))
             .available(!ModConfig.get().useDefaultCaption.get())
             .controller(ColorControllerBuilder::create)
-            .binding(
+            .stateManager(StateManager.createInstant(
                 new Color(DwmApi.DWMWA_COLOR_DEFAULT),
                 () -> new Color(ModConfig.get().captionColor.get()),
                 value -> {
                     final ModConfig config = ModConfig.get();
                     config.setConfig(config.captionColor, value.getRGB());
                 }
-            )
-            .instant(true)
+            ))
             .build();
 
         return ConfigCategory.createBuilder()
@@ -188,7 +182,7 @@ public final class ModConfigScreen {
                 .name(translatable("mica.category.caption.use_default_caption"))
                 .description(OptionDescription.of(translatable("mica.category.caption.use_default_caption.description")))
                 .controller(BooleanControllerBuilder::create)
-                .binding(
+                .stateManager(StateManager.createInstant(
                     true,
                     () -> ModConfig.get().useDefaultCaption.get(),
                     value -> {
@@ -196,8 +190,7 @@ public final class ModConfigScreen {
                         config.setConfig(config.useDefaultCaption, value);
                         captionColor.setAvailable(!value);
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
             .option(captionColor)
@@ -211,15 +204,14 @@ public final class ModConfigScreen {
             .description(OptionDescription.of(translatable("mica.category.title_text.text_color.description")))
             .available(!ModConfig.get().useDefaultText.get())
             .controller(ColorControllerBuilder::create)
-            .binding(
+            .stateManager(StateManager.createInstant(
                 new Color(DwmApi.DWMWA_COLOR_DEFAULT),
                 () -> new Color(ModConfig.get().textColor.get()),
                 value -> {
                     final ModConfig config = ModConfig.get();
                     config.setConfig(config.textColor, value.getRGB());
                 }
-            )
-            .instant(true)
+            ))
             .build();
 
         return ConfigCategory.createBuilder()
@@ -228,7 +220,7 @@ public final class ModConfigScreen {
                 .name(translatable("mica.category.title_text.use_default_color"))
                 .description(OptionDescription.of(translatable("mica.category.title_text.use_default_color.description")))
                 .controller(BooleanControllerBuilder::create)
-                .binding(
+                .stateManager(StateManager.createInstant(
                     true,
                     () -> ModConfig.get().useDefaultText.get(),
                     value -> {
@@ -236,8 +228,7 @@ public final class ModConfigScreen {
                         config.setConfig(config.useDefaultText, value);
                         textColor.setAvailable(!value);
                     }
-                )
-                .instant(true)
+                ))
                 .build()
             )
             .option(textColor)
