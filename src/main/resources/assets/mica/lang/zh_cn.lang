@@ -1,0 +1,39 @@
+mica.unsupported_os.title=不支持的系统
+mica.unsupported_os.description=%s 仅适用于 Windows 11 21H2 (22000) 或更高版本的操作系统。
+
+mica.category.general=通用
+mica.category.general.use_immersive_dark_mode=沉浸式黑暗模式
+mica.category.general.use_immersive_dark_mode.tooltip=可以通过启用设置来启用“沉浸式黑暗模式”。
+mica.category.general.system_backdrop_type=窗体效果
+mica.category.general.system_backdrop_type.tooltip=可以将其更改为 Windows 11 中可用的系统背景效果。 \n（从 Windows 11 内部版本 22621 开始受支持。）
+mica.category.general.system_backdrop_type.type.auto=自动
+mica.category.general.system_backdrop_type.type.none=无
+mica.category.general.system_backdrop_type.type.mica=云母效果
+mica.category.general.system_backdrop_type.type.acrylic=亚克力效果
+mica.category.general.system_backdrop_type.type.tabbed=Tabbed UI
+mica.category.general.corner_preference=圆角曲度
+mica.category.general.corner_preference.tooltip=可以改变窗口的圆角曲度。
+mica.category.general.corner_preference.type.default=默认
+mica.category.general.corner_preference.type.do_not_round=无圆角（Win10）
+mica.category.general.corner_preference.type.round=圆角
+mica.category.general.corner_preference.type.round_small=小圆角
+
+mica.category.border=窗口边框
+mica.category.border.use_default_border=默认窗口边框
+mica.category.border.use_default_border.tooltip=可以通过关闭此设置来自定义窗口边框。
+mica.category.border.hide_border=使用无边框窗口
+mica.category.border.hide_border.tooltip=可以移除窗口边框的设置。
+mica.category.border.border_color=更改边框颜色
+mica.category.border.border_color.tooltip=可以改变窗口的边框颜色。
+
+mica.category.caption=标题栏
+mica.category.caption.use_default_caption=默认标题栏颜色
+mica.category.caption.use_default_caption.tooltip=可以通过关闭此设置来自定义标题栏颜色。
+mica.category.caption.caption_color=标题栏颜色
+mica.category.caption.caption_color.tooltip=可以改变标题栏的颜色。
+
+mica.category.title_text=标题文字
+mica.category.title_text.use_default_color=默认标题文字颜色
+mica.category.title_text.use_default_color.tooltip=可以通过关闭此设置来自定义标题文字颜色。
+mica.category.title_text.text_color=标题文字颜色
+mica.category.title_text.text_color.tooltip=可以改变标题文字的颜色。
