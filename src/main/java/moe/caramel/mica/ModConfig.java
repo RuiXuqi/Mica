@@ -147,15 +147,23 @@ public class ModConfig {
         return config;
     }
 
-    private static <E extends Enum<E>> @NonNull E getEnum(String category, String key, @NonNull E defaultEnum, String comment, @Nullable String langKey) {
+    /**
+     * Get a string property from enum. Enum class can implement {@link ITranslatable} to create lang keys for enums.
+     * @param langKey the key of the prop and enums
+     */
+    private static @NonNull <E extends Enum<E>> E getEnum(String category, String key, @NonNull E defaultEnum, String comment, @Nullable String langKey) {
         Class<E> enumClass = defaultEnum.getDeclaringClass();
         String[] values = Arrays.stream(enumClass.getEnumConstants()).map(Enum::name).toArray(String[]::new);
-        String[] names = values;
-        if (langKey != null && ITranslatable.class.isAssignableFrom(enumClass)) {
-            names = Arrays.stream(enumClass.getEnumConstants()).map(e -> langKey + ".type." + ((ITranslatable) e).getLangKey()).toArray(String[]::new);
+        Property prop = config.get(category, key, defaultEnum.name(), comment, values);
+        if (langKey != null) {
+            prop.setLanguageKey(langKey);
+            if (ITranslatable.class.isAssignableFrom(enumClass)) {
+                // Create lang keys for enums
+                String[] names = Arrays.stream(enumClass.getEnumConstants()).map(e -> langKey + ".type." + ((ITranslatable) e).getLangKey()).toArray(String[]::new);
+                prop.setValidValuesDisplay(names);
+            }
         }
-        Property prop = config.get(category, key, defaultEnum.name(), comment, values, names);
-        if (langKey != null) prop.setLanguageKey(langKey);
+
         validifyStringProp(prop);
         try {
             return Enum.valueOf(enumClass, prop.getString());
